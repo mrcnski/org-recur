@@ -8,22 +8,24 @@ Recurring org-mode tasks.
 
 ## About
 
-This package extends org-mode and org-agenda with support for defining recurring tasks.
+This package extends org-mode and org-agenda with support for defining recurring tasks and easily scheduling them.
 
-I initially wrote this package for myself, because I've found that simple task management systems are the most effective for me. With this package I can just press `d` in the org-agenda to easily reschedule a recurring chore -- neat! I hope that others happen to find this useful as well.
+I initially wrote this package for myself, because I've found that simple task management systems are the most effective for me. With this package I can just press `d` in the org-agenda to quickly reschedule a recurring chore -- neat! I hope that others happen to find this useful as well.
 
 ## Usage
 
-By adding some simple syntax to a task heading you can control how the task should recur. Examples:
+By adding some simple syntax to a task heading you can control how often the task should recur. Examples:
 
 + `|+2|`: Recur every other day.
 + `|+w|`: Recur every week.
 + `|1|`: Recur on the first of every month.
 + `|Thu|`: Recur every Thursday.
-+ `|Sun,Sat|`: Recur every Sunday and Saturday.
-+ `|Wkdy|`: Recur every weekday.
++ *`|Sun,Sat|`: Recur every Sunday and Saturday.
++ *`|Wkdy|`: Recur every weekday.
 
-You can use the provided command `org-recur-finish` to reschedule tasks based on their recurrence pattern.
+The syntax is almost identical to the one used by `org-schedule`, with additional syntax, provided by org-recur, marked by `*`.
+
+You can use the provided command `org-recur-finish` to reschedule tasks based on their recurrence syntax. With your cursor over a task, in either org-mode or org-agenda, call `org-recur-finish` and it will handle the task intelligently. If the task does not contain a recurrence syntax, the command will ignore it by default, though this is customizable.
 
 ## Installing
 
@@ -42,7 +44,7 @@ Or, if you have [use-package](https://github.com/jwiegley/use-package):
 
 ## Recommended Configuration
 
-The following `use-package` configuration sets the suggested keybindings (`C-c d`, as well as `d` in `org-agenda-mode`). It also enables `org-recur-finish` to act on headings without org-recur syntax, marking them done and archiving them.
+The following `use-package` configuration sets the suggested keybindings (`C-c d`, as well as `d` in `org-agenda-mode`). It also enables `org-recur-finish` to act on headings without recurrence syntax, marking them done and archiving them.
 
 ```elisp
 (use-package org-recur
