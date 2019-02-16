@@ -77,12 +77,12 @@ org-recur syntax should archive it."
 (defvar org-recur--buffer-keywords nil)
 
 (defun org-recur--turn-on ()
-  "Set up `org-recur-mode'."
+  "Turn on font-locking."
   (let ((keywords org-recur--full-keywords))
     (set (make-local-variable 'org-recur--buffer-keywords) keywords)
     (font-lock-add-keywords nil keywords t)))
 (defun org-recur--turn-off ()
-  "Tear down `org-recur-mode'."
+  "Remove font-locking."
   (when org-recur--buffer-keywords
     (font-lock-remove-keywords nil org-recur--buffer-keywords)
     (kill-local-variable 'org-recur--buffer-keywords)))
