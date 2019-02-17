@@ -4,7 +4,7 @@
 ;; Description: Recurring org-mode tasks.
 ;; Author:      Marcin Swieczkowski <marcin.swieczkowski@gmail.com>
 ;; Created:     Fri Feb 15 2017
-;; Version:     0.0.1
+;; Version:     1.0
 ;; Package-Requires: ((emacs "24") (org "9.0"))
 ;; URL:         https://github.com/m-cat/org-recur
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
