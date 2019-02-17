@@ -23,7 +23,7 @@ By adding some simple syntax to a task heading you can control how often the tas
 + *`|Sun,Sat|`: Recur every Sunday and Saturday.
 + *`|Wkdy|`: Recur every weekday.
 
-The syntax is almost identical to the one used by `org-schedule`, with additional syntax, provided by org-recur, marked by `*`.
+The syntax is almost identical to the one used by `org-schedule`, with examples of additional syntax, provided by org-recur, marked by `*`.
 
 You can use the provided command `org-recur-finish` to reschedule tasks based on their recurrence syntax. With your cursor over a task, in either org-mode or org-agenda, call `org-recur-finish` and it will handle the task intelligently. If the task does not contain a recurrence syntax, the command will ignore it by default, though this is customizable.
 

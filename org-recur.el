@@ -70,9 +70,14 @@ org-recur syntax should archive it."
 
 ;; Internals
 
+;; Simple regexp for extracting the date string from headings, and highlighting
+;; in org-agenda.
 (defconst org-recur--regexp "|\\([^|]*\\)|")
+;; More complex regexp for highlighting in org-mode, without also highlighting
+;; tables.
+(defconst org-recur--regexp-full "^\\*+ +[^|\n]*\\(|[^|]*|\\)")
 
-(defconst org-recur--full-keywords `((,org-recur--regexp 0 'org-recur t)))
+(defconst org-recur--full-keywords `((,org-recur--regexp-full 1 'org-recur t)))
 
 (defvar org-recur--buffer-keywords nil)
 
@@ -112,7 +117,7 @@ See ‘org-read-date’ for the various forms of a date string."
 (defconst org-recur--weekday-recurrence "mon,tue,wed,thu,fri")
 
 (defun org-recur--get-next-date (heading)
-  "Gets the next date to schedule to based on HEADING, or NIL \
+  "Return the next date to reschedule to based on HEADING, or NIL \
 if no recurrence found."
   (cond ((string-match org-recur--regexp heading)
          (let* (
