@@ -1,5 +1,7 @@
 # org-recur
 
+[![LoC](https://tokei.rs/b1/github/m-cat/org-recur)](https://github.com/m-cat/org-recur)
+
 Recurring org-mode tasks.
 
 ## Screenshot
