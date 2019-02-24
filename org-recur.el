@@ -144,22 +144,25 @@ NIL if no recurrence found."
 
 ;;;###autoload
 (defun org-recur-finish ()
-  "Reschedule an `org-mode' task containing an org-recur date string \
-according to the date. The org-recur syntax is '|DATE|', where
-DATE can be either an absolute date or a delta, so e.g. a task
-heading containing '|+2|' indicates to `org-recur-finish' to
-reschedule the task to two days from now.
+  "Reschedule an `org-mode' task according to its org-recur date string.
+The org-recur syntax is '|DATE|', where DATE can be either an
+absolute date or more commonly a delta, e.g. a task heading
+containing '|+2|' indicates to `org-recur-finish' to reschedule
+the task to two days from now.
 
-All date strings supported by `org-read-date' are available, in
-addition to 'wkdy', which schedules the task to the next weekday,
-and the 'N1,N2,...' syntax, wherein the earliest date string
-among the set of N is selected. For example, '|Mon,Fri|'
-indicates that the task should recur every Monday and Friday.
+All date strings supported by `org-read-date' are available. Also
+available is 'wkdy' (customizable with `org-recur-weekday') which
+schedules the task to the next weekday (customizable with
+`org-recur-weekday-recurrence'). Also possible is the 'N1,N2,...'
+syntax, wherein the earliest date string among the set of N is
+selected. For example, '|Mon,Fri|' indicates that the task should
+recur every Monday and Friday, and the soonest among them is
+chosen when calling `org-recur-finish'.
 
 If the task does not contain org-recur syntax, then depending on
 the values of `org-recur-finish-done' and
 `org-recur-finish-archive' change the task status to DONE and/or
-archive it."
+archive it, respectively"
   (interactive)
   (let* ((is-agenda (string= "org-agenda-mode" major-mode))
          (heading (if is-agenda
@@ -196,7 +199,7 @@ archive it."
 
 ;;;###autoload
 (define-minor-mode org-recur-mode
-  "Highlight org-recur dates and add commands for rescheduling them.
+  "Highlight org-recur dates and add commands for rescheduling tasks.
 
 With a prefix argument ARG, enable org-recur mode if ARG is positive, and
 disable it otherwise. If called from Lisp, enable the mode if ARG is omitted or
