@@ -56,16 +56,29 @@
   "Face to highlight org-recur dates."
   :group 'org-recur)
 
-(defcustom org-recur-finish-done nil
-  "Non-nil if calling `org-recur-finish' on a task without \
-org-recur syntax should mark it as DONE."
+(defcustom org-recur-finish-archive nil
+  "Non-nil if calling `org-recur-finish' on a task without org-recur syntax should archive it."
   :type 'boolean
   :group 'org-recur)
 
-(defcustom org-recur-finish-archive nil
-  "Non-nil if calling `org-recur-finish' on a task without \
-org-recur syntax should archive it."
+(defcustom org-recur-finish-done nil
+  "Non-nil if calling `org-recur-finish' on a task without org-recur syntax should mark it as DONE."
   :type 'boolean
+  :group 'org-recur)
+
+(defcustom org-recur-weekday "wkdy"
+  "Date string for org-recur that indicates the next weekday.
+This is similar to how e.g. 'fri' indicates the next Friday. Non
+case-sensitive. What is considered a weekday can be customized --
+see `org-recur-weekday-recurrence'."
+  :type 'string
+  :group 'org-recur)
+
+(defcustom org-recur-weekday-recurrence "mon,tue,wed,thu,fri"
+  "The recurrence string that `org-recur-weekday' expands to.
+`org-recur-finish' will pick the soonest of any of the dates
+between commas."
+  :type 'string
   :group 'org-recur)
 
 ;; Internals
@@ -95,8 +108,7 @@ org-recur syntax should archive it."
 (defun org-recur--date-string-to-time (org-date-string)
   "Convert ORG-DATE-STRING to a time value."
   (let ((time (org-read-date-analyze org-date-string nil nil)))
-    (encode-time 0 0 0 (nth 3 time) (nth 4 time) (nth 5 time)))
-  )
+    (encode-time 0 0 0 (nth 3 time) (nth 4 time) (nth 5 time))))
 (defun org-recur--date-less-p (D1 D2)
   "Return non-nil if date string D1 is earlier than date string D2.
 A nil value is always considered greater than any date string.
@@ -108,23 +120,15 @@ See ‘org-read-date’ for the various forms of a date string."
       (time-less-p (org-recur--date-string-to-time D1)
                    (org-recur--date-string-to-time D2)))))
 
-;; (assert (org-date-less-p "+1" "+2"))
-;; (assert (not (org-date-less-p "+3" "+2")))
-;; (assert (org-date-less-p "+1" nil))
-;; (assert (org-date-less-p "+1" ""))
-
-(defconst org-recur--weekday "wkdy")
-(defconst org-recur--weekday-recurrence "mon,tue,wed,thu,fri")
-
 (defun org-recur--get-next-date (heading)
-  "Return the next date to reschedule to based on HEADING, or NIL \
-if no recurrence found."
+  "Return the next date to reschedule to based on HEADING.
+NIL if no recurrence found."
   (cond ((string-match org-recur--regexp heading)
          (let* (
                 ;; Get the recurrence string.
                 ;; Replace any occurrence of "wkdy" (case-insensitive).
                 (recurrence (replace-regexp-in-string
-                             org-recur--weekday org-recur--weekday-recurrence
+                             org-recur-weekday org-recur-weekday-recurrence
                              (match-string 1 heading)))
                 ;; Split the recurrence as it may contain multiple options.
                 (options (split-string recurrence ","))
@@ -132,13 +136,9 @@ if no recurrence found."
                 (next-date
                  (let (value)
                    (dolist (elt options value)
-                     (setq value (if (org-recur--date-less-p elt value) elt value))
-                     )))
-                )
-           next-date
-           ))
-        (t nil)
-        ))
+                     (setq value (if (org-recur--date-less-p elt value) elt value))))))
+           next-date))
+        (t nil)))
 
 ;; Autoloads
 
@@ -174,16 +174,15 @@ archive it."
            (if is-agenda
                (org-agenda-schedule nil next-date)
              (org-schedule nil next-date)))
-           (t
-            (when org-recur-finish-done
-              (if is-agenda
-                  (org-agenda-todo 'done)
-                (org-todo 'done)))
-            (when org-recur-finish-archive
-              (if is-agenda
-                  (org-agenda-archive)
-                (org-archive-subtree)))
-            ))))
+          (t
+           (when org-recur-finish-done
+             (if is-agenda
+                 (org-agenda-todo 'done)
+               (org-todo 'done)))
+           (when org-recur-finish-archive
+             (if is-agenda
+                 (org-agenda-archive)
+               (org-archive-subtree)))))))
 
 ;;;###autoload
 (add-hook 'org-mode-hook 'org-recur-mode)
