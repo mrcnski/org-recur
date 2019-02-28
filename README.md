@@ -105,4 +105,10 @@ org-mode already supports ["repeated tasks"](https://orgmode.org/manual/Repeated
 + You can't see how often a task recurs from the org-agenda view, you only see the task's headline and not its `SCHEDULED`/`DEADLINE` timestamps.
 + Repeated tasks require the `.+` syntax to shift the date based on today, which is what I almost always want. If I want to schedule a `+2` task to tomorrow I can do that manually, but I still want it to be clear that the task should recur every two days.
 
-org-recur is also simpler. I want to think as little as possible when I organize my time -- this helps keep my personal time management frictionless.
+org-recur is also simpler. I want to think as little as possible when I organize my time, helping  keep my personal time management frictionless.
+
+### Sexp diary entries
+
+You can also get some features of org-recur using [Diary-style sexp entries](https://orgmode.org/guide/Timestamps.html). For example, you can get the `|1,15|` recurrence with `SCHEDULED: <%%(diary-date t '(1 15) 2019)>` (see `C-h f diary-date`).
+
+The biggest shortcoming of this approach, it seems to me, is the complexity of it. You also can't see the timestamp from the org-agenda view.
