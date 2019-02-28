@@ -29,6 +29,14 @@ The syntax is almost identical to the one used by `org-schedule`, with examples 
 
 You can use the provided command `org-recur-finish` to reschedule tasks based on their recurrence syntax. With your cursor over a task, in either org-mode or org-agenda, call `org-recur-finish` and it will handle the task intelligently. If the task does not contain a recurrence syntax, the command will ignore it by default, though this is customizable.
 
+### Time of day
+
+org-recur supports time of day. It looks something like this: `|1 10:00, 15 10:00| headline`. It's a bit verbose, but you can specify different times of day for each date. If you don't want the verbosity you can move the time of day outside of org-recur: `|1, 15| 10:00 headline` works just fine, and is what I have been doing. org-agenda will pick up the time in either scenario.
+
+### Customizing weekdays
+
+You can customize the `org-recur-weekday-recurrence` variable to match your lifestyle. If a "weekday" (a day in which you work or study) for you includes Saturday, or excludes Wednesday, you can modify the variable accordingly.
+
 ## Installing
 
 Make sure you have set up [MELPA](http://melpa.milkbox.net/#/getting-started) and run:
