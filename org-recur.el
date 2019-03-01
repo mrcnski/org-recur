@@ -107,7 +107,7 @@ between commas."
 
 (defun org-recur--date-string-to-time (org-date-string)
   "Convert ORG-DATE-STRING to a time value."
-  (let* ((time (org-read-date-analyze org-date-string nil nil))
+  (let* ((time (org-read-date-analyze org-date-string nil (decode-time)))
          (sec (nth 0 time))
          (min (nth 1 time))
          (hour (nth 2 time)))
