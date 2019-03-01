@@ -107,8 +107,12 @@ between commas."
 
 (defun org-recur--date-string-to-time (org-date-string)
   "Convert ORG-DATE-STRING to a time value."
-  (let ((time (org-read-date-analyze org-date-string nil nil)))
-    (encode-time 0 0 0 (nth 3 time) (nth 4 time) (nth 5 time))))
+  (let* ((time (org-read-date-analyze org-date-string nil nil))
+         (sec (nth 0 time))
+         (min (nth 1 time))
+         (hour (nth 2 time)))
+    (encode-time (if sec sec 0) (if min min 0) (if hour hour 0)
+                 (nth 3 time) (nth 4 time) (nth 5 time))))
 (defun org-recur--date-less-p (D1 D2)
   "Return non-nil if date string D1 is earlier than date string D2.
 A nil value is always considered greater than any date string.

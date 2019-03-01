@@ -103,6 +103,12 @@ Keep the task metadata clean:
 (setq org-log-reschedule nil)
 ```
 
+Prefer rescheduling to future dates and times:
+
+```elisp
+(setq org-read-date-prefer-future 'time)
+```
+
 ## Alternatives
 
 ### Repeated tasks
