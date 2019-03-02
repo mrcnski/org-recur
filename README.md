@@ -31,7 +31,7 @@ You can use the provided command `org-recur-finish` to reschedule tasks based on
 
 ### Time of day
 
-org-recur supports time of day. It looks something like this: `|1 10:00, 15 10:00| headline`. It's a bit verbose, but you can specify different times of day for each date. If you don't want the verbosity you can move the time of day outside of org-recur: `|1, 15| 10:00 headline` works just fine, and is what I have been doing. org-agenda will pick up the time in either scenario.
+org-recur supports time of day. It looks something like this: `|1 10:00, 15 12:00| headline`. It's a bit verbose, but you can specify different times of day for each date. If you don't want the verbosity you can move the time of day outside of org-recur: `|1, 15| 10:00 headline` works just fine, and is what I have been doing. org-agenda will pick up the time in either scenario.
 
 ### Customizing weekdays
 
@@ -54,21 +54,26 @@ Or, if you have [use-package](https://github.com/jwiegley/use-package):
 
 ## Recommended Configuration
 
-The following `use-package` configuration sets the suggested keybindings (`C-c d`, as well as `d` in `org-agenda-mode`). It also enables `org-recur-finish` to act on headings without recurrence syntax, marking them done and archiving them.
+The following `use-package` configuration:
+
++ Enables `org-recur-mode` in org-mode files and `org-recur-agenda-mode` in the org-agenda.
++ Sets the suggested keybindings (`C-c d`, as well as `d` in `org-recur-agenda-mode`).
++ Enables `org-recur-finish` acting on headings without recurrence syntax, marking them done and archiving them.
 
 ```elisp
 (use-package org-recur
+  :hook ((org-mode . org-recur-mode)
+         (org-agenda-mode . org-recur-agenda-mode))
   :demand t
-  :bind ("C-c d" . org-recur-finish)
-
   :config
+  (define-key org-recur-mode-map (kbd "C-c d") 'org-recur-finish)
 
   ;; Rebind the 'd' key in org-agenda (default: `org-agenda-day-view').
-  (define-key org-agenda-mode-map (kbd "d") 'org-recur-finish)
+  (define-key org-recur-agenda-mode-map (kbd "d") 'org-recur-finish)
+  (define-key org-recur-agenda-mode-map (kbd "C-c d") 'org-recur-finish)
 
   (setq org-recur-finish-done t
-        org-recur-finish-archive t)
-  )
+        org-recur-finish-archive t))
 ```
 
 ## Recommended org-mode settings
@@ -84,8 +89,7 @@ Refresh the org-agenda whenever a task is rescheduled:
   (dolist (buffer (buffer-list))
     (with-current-buffer buffer
       (when (derived-mode-p 'org-agenda-mode)
-        (org-agenda-maybe-redo)
-        ))))
+        (org-agenda-maybe-redo)))))
 
 (defadvice org-schedule (after refresh-agenda activate)
   "Refresh org-agenda."

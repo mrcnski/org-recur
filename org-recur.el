@@ -89,17 +89,6 @@ between commas."
 
 (defvar org-recur--buffer-keywords nil)
 
-(defun org-recur--turn-on ()
-  "Turn on font-locking."
-  (let ((keywords org-recur--full-keywords))
-    (set (make-local-variable 'org-recur--buffer-keywords) keywords)
-    (font-lock-add-keywords nil keywords t)))
-(defun org-recur--turn-off ()
-  "Remove font-locking."
-  (when org-recur--buffer-keywords
-    (font-lock-remove-keywords nil org-recur--buffer-keywords)
-    (kill-local-variable 'org-recur--buffer-keywords)))
-
 (defun org-recur--date-string-to-time (org-date-string)
   "Convert ORG-DATE-STRING to a time value."
   (let* ((time (org-read-date-analyze org-date-string nil (decode-time)))
@@ -138,6 +127,32 @@ NIL if no recurrence found."
                      (setq value (if (org-recur--date-less-p elt value) elt value))))))
            next-date))
         (t nil)))
+
+(defun org-recur--highlight-agenda ()
+  "Highlight org-recur syntax in `org-agenda'."
+  (highlight-regexp org-recur--regexp 'org-recur))
+
+(defun org-recur--turn-on ()
+  "Turn on font-locking."
+  (let ((keywords org-recur--full-keywords))
+    (set (make-local-variable 'org-recur--buffer-keywords) keywords)
+    (font-lock-add-keywords nil keywords t)))
+(defun org-recur--turn-off ()
+  "Remove font-locking."
+  (when org-recur--buffer-keywords
+    (font-lock-remove-keywords nil org-recur--buffer-keywords)
+    (kill-local-variable 'org-recur--buffer-keywords)))
+
+(defun org-recur-agenda--turn-on ()
+  "Highlight regexp in agenda."
+  (org-recur--highlight-agenda)
+  (add-hook 'org-agenda-finalize-hook 'org-recur--highlight-agenda)
+  (add-hook 'org-agenda-mode-hook 'org-recur-agenda-mode))
+(defun org-recur-agenda--turn-off ()
+  "Unhighlight regexp in agenda."
+  (unhighlight-regexp org-recur--regexp)
+  (remove-hook 'org-agenda-finalize-hook 'org-recur--highlight-agenda)
+  (remove-hook 'org-agenda-mode-hook 'org-recur-agenda-mode))
 
 ;; Autoloads
 
@@ -186,33 +201,46 @@ archive it, respectively"
                  (org-agenda-archive)
                (org-archive-subtree)))))))
 
-;;;###autoload
-(add-hook 'org-mode-hook 'org-recur-mode)
-;;;###autoload
-(add-hook 'org-agenda-mode-hook 'org-recur-mode)
-
-;;;###autoload
-(add-hook 'org-agenda-finalize-hook
-          (lambda ()
-            (highlight-regexp org-recur--regexp 'org-recur)))
+(defvar org-recur-mode-map (make-sparse-keymap)
+  "Keymap for org recur mode.")
+(defvar org-recur-agenda-mode-map (make-sparse-keymap)
+  "Keymap for org recur agenda mode.")
 
 ;;;###autoload
 (define-minor-mode org-recur-mode
-  "Highlight org-recur dates and add commands for rescheduling tasks.
+  "Highlight org-recur dates in org-mode.
 
-With a prefix argument ARG, enable org-recur mode if ARG is positive, and
-disable it otherwise. If called from Lisp, enable the mode if ARG is omitted or
-nil, and toggle it if ARG is `toggle'."
+With a prefix argument ARG, enable org-recur mode if ARG is
+positive, and disable it otherwise. If called from Lisp, enable
+the mode if ARG is omitted or nil, and toggle it if ARG is
+`toggle'."
   :init-value nil
   :lighter ""
-  :keymap nil
-  (org-recur--turn-off)
-  (when org-recur-mode
-    (org-recur--turn-on))
+  :keymap org-recur-mode-map
+  :group 'org-recur
+  (if org-recur-mode
+      (org-recur--turn-on)
+    (org-recur--turn-off))
   (when font-lock-mode
     (if (fboundp 'font-lock-flush)
         (font-lock-flush)
       (with-no-warnings (font-lock-fontify-buffer)))))
+
+;;;###autoload
+(define-minor-mode org-recur-agenda-mode
+  "Highlight org-recur dates in `org-agenda'.
+
+With a prefix argument ARG, enable org-recur-agenda mode if ARG
+is positive, and disable it otherwise. If called from Lisp,
+enable the mode if ARG is omitted or nil, and toggle it if ARG is
+`toggle'."
+  :lighter ""
+  :keymap org-recur-agenda-mode-map
+  :group 'org-recur
+  (if org-recur-agenda-mode
+      (progn (global-hi-lock-mode 1)
+             (org-recur-agenda--turn-on))
+    (org-recur-agenda--turn-off)))
 
 (provide 'org-recur)
 ;;; org-recur.el ends here
