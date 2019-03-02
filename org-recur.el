@@ -11,13 +11,8 @@
 ;;
 ;;; Commentary:
 ;;
-;; About:
-;;
-;; See README.md.
-;;
-;; Installing:
-;;
-;; See README.md for the most up-to-date installation instructions.
+;; This package extends org-mode and org-agenda with support for defining
+;; recurring tasks and easily scheduling them.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
