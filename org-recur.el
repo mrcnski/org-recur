@@ -44,7 +44,7 @@
 
 (defgroup org-recur nil
   "Recurring org-mode tasks."
-  :group 'faces)
+  :group 'org)
 
 (defface org-recur
   '((t :inherit org-tag))
