@@ -103,30 +103,56 @@ A nil value is always considered greater than any date string.
 See ‘org-read-date’ for the various forms of a date string."
   (if (or (not D2) (string= "" D2))
       t
-    (if (or (not D1) (string= "" D1))
-        nil
+    (unless (or (not D1) (string= "" D1))
       (time-less-p (org-recur--date-string-to-time D1)
                    (org-recur--date-string-to-time D2)))))
 
 (defun org-recur--get-next-date (heading)
   "Return the next date to reschedule to based on HEADING.
-NIL if no recurrence found."
-  (cond ((string-match org-recur--regexp heading)
-         (let* (
-                ;; Get the recurrence string.
-                ;; Replace any occurrence of "wkdy" (case-insensitive).
-                (recurrence (replace-regexp-in-string
-                             org-recur-weekday org-recur-weekday-recurrence
-                             (match-string 1 heading)))
-                ;; Split the recurrence as it may contain multiple options.
-                (options (split-string recurrence ","))
-                ;; Get the earliest option.
-                (next-date
-                 (let (value)
-                   (dolist (elt options value)
-                     (setq value (if (org-recur--date-less-p elt value) elt value))))))
-           next-date))
-        (t nil)))
+Return nil if no recurrence found."
+  (when (string-match org-recur--regexp heading)
+    (let* (
+           ;; Get the recurrence string.
+           ;; Replace any occurrence of "wkdy" (case-insensitive).
+           (recurrence (replace-regexp-in-string
+                        org-recur-weekday org-recur-weekday-recurrence
+                        (match-string 1 heading)))
+           ;; Split the recurrence as it may contain multiple options.
+           (options (split-string recurrence ","))
+           ;; Get the earliest option.
+           (next-date
+            (let (value)
+              (dolist (elt options value)
+                (setq value (if (org-recur--date-less-p elt value) elt value))))))
+      next-date)))
+
+(defun org-recur--org-finish ()
+  "Reschedule a task in `org-mode' according to its recurrence string."
+  (let* ((heading (substring-no-properties (org-get-heading)))
+         (next-date (org-recur--get-next-date heading)))
+    (cond (next-date
+           (org-schedule nil next-date))
+          (t
+           (when org-recur-finish-done
+             (org-todo 'done))
+           (when org-recur-finish-archive
+             (org-archive-subtree))))))
+(defun org-recur--org-agenda-finish ()
+  "Reschedule a task in `org-mode-agenda' according to its recurrence string."
+  (let* ((heading
+          ;; FIXME: Find a more robust way of getting the header
+          ;; from org-agenda view? This approach seems sufficient so
+          ;; far though.
+          (buffer-substring-no-properties
+           (line-beginning-position) (line-end-position)))
+         (next-date (org-recur--get-next-date heading)))
+    (cond (next-date
+           (org-agenda-schedule nil next-date))
+          (t
+           (when org-recur-finish-done
+             (org-agenda-todo 'done)
+             (when org-recur-finish-archive
+               (org-agenda-archive)))))))
 
 (defun org-recur--highlight-agenda ()
   "Highlight org-recur syntax in `org-agenda'."
@@ -178,28 +204,9 @@ the values of `org-recur-finish-done' and
 `org-recur-finish-archive' change the task status to DONE and/or
 archive it, respectively"
   (interactive)
-  (let* ((is-agenda (string= "org-agenda-mode" major-mode))
-         (heading (if is-agenda
-                      ;; FIXME: Find a more robust way of getting the header
-                      ;; from org-agenda view? This approach seems sufficient so
-                      ;; far though.
-                      (buffer-substring-no-properties
-                       (line-beginning-position) (line-end-position))
-                    (substring-no-properties (org-get-heading))))
-         (next-date (org-recur--get-next-date heading)))
-    (cond (next-date
-           (if is-agenda
-               (org-agenda-schedule nil next-date)
-             (org-schedule nil next-date)))
-          (t
-           (when org-recur-finish-done
-             (if is-agenda
-                 (org-agenda-todo 'done)
-               (org-todo 'done)))
-           (when org-recur-finish-archive
-             (if is-agenda
-                 (org-agenda-archive)
-               (org-archive-subtree)))))))
+  (if (derived-mode-p 'org-agenda-mode)
+      (org-recur--org-agenda-finish)
+    (org-recur--org-finish)))
 
 (defvar org-recur-mode-map (make-sparse-keymap)
   "Keymap for org recur mode.")
@@ -238,8 +245,7 @@ enable the mode if ARG is omitted or nil, and toggle it if ARG is
   :keymap org-recur-agenda-mode-map
   :group 'org-recur
   (if org-recur-agenda-mode
-      (progn (global-hi-lock-mode 1)
-             (org-recur-agenda--turn-on))
+      (org-recur-agenda--turn-on)
     (org-recur-agenda--turn-off)))
 
 (provide 'org-recur)
