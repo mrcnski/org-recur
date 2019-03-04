@@ -3,8 +3,8 @@
 ;; Filename:    org-recur.el
 ;; Description: Recurring org-mode tasks.
 ;; Author:      Marcin Swieczkowski <marcin.swieczkowski@gmail.com>
-;; Created:     Fri Feb 15 2017
-;; Version:     1.1
+;; Created:     Fri Feb 15 2019
+;; Version:     1.2
 ;; Package-Requires: ((emacs "24") (org "9.0"))
 ;; URL:         https://github.com/m-cat/org-recur
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -13,6 +13,25 @@
 ;;
 ;; This package extends org-mode and org-agenda with support for defining
 ;; recurring tasks and easily scheduling them.
+;;
+;; By adding some simple syntax to a task heading you can control how often the
+;; task should recur. Examples:
+;;
+;; + |+2|: Recur every other day.
+;; + |+w|: Recur every week.
+;; + |1|: Recur on the first of every month.
+;; + |Thu|: Recur every Thursday.
+;; + *|Sun,Sat|: Recur every Sunday and Saturday.
+;; + *|Wkdy|: Recur every weekday.
+;;
+;; The syntax is almost identical to the one used by `org-schedule', with
+;; examples of additional syntax, provided by org-recur, marked by *.
+;;
+;; You can use the provided command `org-recur-finish' to reschedule tasks based
+;; on their recurrence syntax. With the point over a task, in either org-mode or
+;; org-agenda, call `org-recur-finish' and it will handle the task
+;; intelligently. If the task does not contain a recurrence syntax, the command
+;; will ignore it by default, though this is customizable.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
