@@ -17,16 +17,16 @@ I initially wrote this package for myself, because I've found that simple task m
 
 ## Usage
 
-By adding some simple syntax to a task heading you can control how often the task should recur. Examples:
+By adding some simple syntax to anywhere in the task heading you can control how often the task should recur. Examples:
 
 + `|+2|`: Recur every other day.
 + `|+w|`: Recur every week.
 + `|1|`: Recur on the first of every month.
 + `|Thu|`: Recur every Thursday.
-+ *`|Sun,Sat|`: Recur every Sunday and Saturday.
-+ *`|Wkdy|`: Recur every weekday.
++ `|Sun,Sat|`: Recur every Sunday and Saturday.*
++ `|Wkdy|`: Recur every weekday.*
 
-The syntax is almost identical to the one used by `org-schedule`, with examples of additional syntax, provided by org-recur, marked by `*`.
+The syntax is the same as the one already used by `org-schedule`, with examples of additional syntax, provided by org-recur, marked by *.
 
 You can use the provided command `org-recur-finish` to reschedule tasks based on their recurrence syntax. With the point over a task, in either org-mode or org-agenda, call `org-recur-finish` and it will handle the task intelligently. If the task does not contain a recurrence syntax, the command will ignore it by default, though this is customizable.
 
@@ -125,6 +125,10 @@ org-mode already supports ["repeated tasks"](https://orgmode.org/manual/Repeated
 + Repeated tasks require the `.+` syntax to shift the date based on today, which is what I almost always want. If I want to schedule a `+2` task to tomorrow I can do that manually, but I still want it to be clear that the task should recur every two days.
 
 org-recur is also simpler. I want to think as little as possible when I organize my time, helping  keep my personal time management frictionless.
+
+### org-habit
+
+[org-habit](https://orgmode.org/manual/Tracking-your-habits.html) is similar to org-recur and has some interesting, albeit unnecessary features. The same drawbacks apply as above; in addition, org-recur is much simpler.
 
 ### Sexp diary entries
 
