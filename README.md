@@ -1,7 +1,9 @@
 # org-recur
 
 [![Melpa](https://melpa.org/packages/org-recur-badge.svg)](https://melpa.org/#/org-recur)
+[![Issues](https://img.shields.io/github/issues-raw/m-cat/org-recur.svg)](https://github.com/m-cat/org-recur/issues)
 [![LoC](https://tokei.rs/b1/github/m-cat/org-recur)](https://github.com/m-cat/org-recur)
+[![License: GPL3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
 
 Recurring org-mode tasks.
 
