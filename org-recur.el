@@ -145,33 +145,43 @@ Return nil if no recurrence found."
                 (setq value (if (org-recur--date-less-p elt value) elt value))))))
       next-date)))
 
-(defun org-recur--org-finish ()
-  "Reschedule a task in `org-mode' according to its recurrence string."
-  (let* ((heading (substring-no-properties (org-get-heading)))
-         (next-date (org-recur--get-next-date heading)))
+(defun org-recur--org-schedule (date finish)
+  "Schedule a task in `org-mode' according to the org-recur syntax in DATE.
+When FINISH is t, optionally completes and archives the task, based on the
+values of `org-recur-finish-done' and `org-recur-finish-archive'."
+  (let ((next-date (org-recur--get-next-date date)))
     (cond (next-date
            (org-schedule nil next-date))
-          (t
+          (finish
            (when org-recur-finish-done
              (org-todo 'done))
            (when org-recur-finish-archive
              (org-archive-subtree))))))
-(defun org-recur--org-agenda-finish ()
-  "Reschedule a task in `org-mode-agenda' according to its recurrence string."
-  (let* ((heading
-          ;; FIXME: Find a more robust way of getting the header
-          ;; from org-agenda view? This approach seems sufficient so
-          ;; far though.
-          (buffer-substring-no-properties
-           (line-beginning-position) (line-end-position)))
-         (next-date (org-recur--get-next-date heading)))
+(defun org-recur--org-agenda-schedule (date finish)
+  "Schedule a task in `org-mode-agenda' according to the org-recur syntax in DATE.
+When FINISH is t, optionally completes and archives the task, based on the
+values of `org-recur-finish-done' and `org-recur-finish-archive'."
+  (let ((next-date (org-recur--get-next-date date)))
     (cond (next-date
            (org-agenda-schedule nil next-date))
-          (t
+          (finish
            (when org-recur-finish-done
              (org-agenda-todo 'done)
              (when org-recur-finish-archive
                (org-agenda-archive)))))))
+(defun org-recur--org-finish ()
+  "Reschedule, or optionally complete and archive, a task in `org-mode' according to its recurrence string."
+  (let ((heading (substring-no-properties (org-get-heading))))
+    (org-recur--org-schedule heading t)))
+(defun org-recur--org-agenda-finish ()
+  "Reschedule, or optionally complete and archive, a task in `org-mode-agenda' according to its recurrence string."
+  (let ((heading
+         ;; FIXME: Find a more robust way of getting the header
+         ;; from org-agenda view? This approach seems sufficient so
+         ;; far though.
+         (buffer-substring-no-properties
+          (line-beginning-position) (line-end-position))))
+    (org-recur--org-agenda-schedule heading t)))
 
 (defun org-recur--highlight-agenda ()
   "Highlight org-recur syntax in `org-agenda'."
@@ -226,6 +236,29 @@ archive it, respectively"
   (if (derived-mode-p 'org-agenda-mode)
       (org-recur--org-agenda-finish)
     (org-recur--org-finish)))
+
+;;;###autoload
+(defun org-recur-schedule-date (date)
+  "Schedule an `org-mode' task according to the org-recur syntax string in DATE.
+See `org-recur-finish' for the syntax.
+If no org-recur syntax is found, nothing happens.
+
+To schedule a task to tomorrow:
+
+#+BEGIN_SRC elisp
+\(org-recur-schedule-date \"|+1|\")
+#+END_SRC"
+  (interactive)
+  (if (derived-mode-p 'org-agenda-mode)
+      (org-recur--org-agenda-schedule date nil)
+    (org-recur--org-schedule date nil)))
+
+;;;###autoload
+(defun org-recur-schedule-today ()
+  "Schedule an `org-mode' task to the current date."
+  (interactive)
+  (org-recur-schedule-date "|+0|")
+  )
 
 (defvar org-recur-mode-map (make-sparse-keymap)
   "Keymap for org recur mode.")
