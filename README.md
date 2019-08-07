@@ -42,6 +42,12 @@ org-recur supports time of day. It looks something like this: `|1 10:00, 15 12:0
 
 You can customize the `org-recur-weekday-recurrence` variable to match your lifestyle. If a "weekday" (a day in which you work or study) for you includes Saturday, or excludes Wednesday, you can modify the variable accordingly.
 
+### "First X of the month"
+
+org-recur doesn't allow for something like "first Wednesday of the month". It only supports `org-schedule` syntax (which is its backend) as well as the ability to pick the *soonest* of several options. These unfortunately can't be combined for some more complicated recurrences.
+
+For a possible alternative which allows for this, please see "Sexp diary entries" below and [here](https://stackoverflow.com/q/16946220/6085242) for an example.
+
 ## Installing
 
 Make sure you have set up [MELPA](http://melpa.milkbox.net/#/getting-started) and run:
