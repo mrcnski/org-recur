@@ -7,6 +7,27 @@
 
 Recurring org-mode tasks.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [org-recur](#org-recur)
+    - [Screenshot](#screenshot)
+    - [About](#about)
+    - [Usage](#usage)
+        - [Time of day](#time-of-day)
+        - [Customizing weekdays](#customizing-weekdays)
+        - ["First X of the month"](#first-x-of-the-month)
+    - [Installing](#installing)
+    - [Recommended Configuration](#recommended-configuration)
+    - [Recommended org-mode settings](#recommended-org-mode-settings)
+    - [Alternatives](#alternatives)
+        - [Repeated tasks](#repeated-tasks)
+        - [org-habit](#org-habit)
+        - [Sexp diary entries](#sexp-diary-entries)
+
+<!-- markdown-toc end -->
+
+
 ## Screenshot
 
 ![Screenshot](screenshot.png)
