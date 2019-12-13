@@ -166,9 +166,9 @@ values of `org-recur-finish-done' and `org-recur-finish-archive'."
            (org-agenda-schedule nil next-date))
           (finish
            (when org-recur-finish-done
-             (org-agenda-todo 'done)
-             (when org-recur-finish-archive
-               (org-agenda-archive)))))))
+             (org-agenda-todo 'done))
+           (when org-recur-finish-archive
+             (org-agenda-archive))))))
 (defun org-recur--org-finish ()
   "Reschedule, or optionally complete and archive, a task in `org-mode' according to its recurrence string."
   (let ((heading (substring-no-properties (org-get-heading))))
