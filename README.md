@@ -49,11 +49,11 @@ By adding some simple syntax to anywhere in the task heading you can control how
 + `|Sun,Sat|`: Recur every Sunday and Saturday.*
 + `|Wkdy|`: Recur every weekday.*
 
-The syntax is the same as the one already used by `org-schedule`, with examples of additional syntax, provided by org-recur, marked by *.
+[The syntax is a superset of the syntax already accepted by `org-schedule`. Additional syntax, provided by org-recur, is marked by *.]
 
-You can use the provided command `org-recur-finish` to reschedule tasks based on their recurrence syntax. With the point over a task, in either org-mode or org-agenda, call `org-recur-finish` and it will handle the task intelligently. If the task does not contain a recurrence syntax, the command will ignore it by default, though this is customizable.
+You can use the provided command `org-recur-finish` to reschedule tasks based on their recurrence syntax. With the point over a task, in either org-mode or org-agenda, call `org-recur-finish` (recommended hotkey `C-c d`) and it will handle the task. If the task does not contain a recurrence syntax, the command will ignore it by default, though this is customizable.
 
-The provided command `org-recur-schedule-today` schedules a task to the current date.
+The provided command `org-recur-schedule-today` (recommended hotkey `C-c 0`) schedules a task to the current date.
 
 ### Time of day
 
@@ -107,6 +107,8 @@ The following `use-package` configuration:
   (setq org-recur-finish-done t
         org-recur-finish-archive t))
 ```
+
+You can also check out [my configuration](https://github.com/m-cat/init.el/blob/master/init.el) (search "org-recur") which provides additional hotkeys that I find useful (like `C-c 1` for scheduling to `+1`, tomorrow).
 
 ## Recommended org-mode settings
 
