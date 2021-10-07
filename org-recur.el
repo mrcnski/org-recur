@@ -110,6 +110,8 @@ between commas."
 
 (defconst org-recur--full-keywords `((,org-recur--regexp-full 1 'org-recur t)))
 
+(defconst org-recur--warning-archiving-disabled "Warning: automatic archiving is disabled when org-log-done is t. Set org-recur-finish-archive to nil to disable this message.")
+
 (defvar org-recur--buffer-keywords nil)
 
 (defun org-recur--date-string-to-time (org-date-string)
@@ -161,7 +163,7 @@ values of `org-recur-finish-done' and `org-recur-finish-archive'."
              (org-todo 'done))
            (when org-recur-finish-archive
              (if (eq 'note org-log-done)
-                 (message "Warning: automatic archiving is disabled when org-log-done is t.")
+                 (message org-recur--warning-archiving-disabled)
                (org-archive-subtree)))))))
 (defun org-recur--org-agenda-schedule (date finish)
   "Schedule a task in `org-mode-agenda' according to org-recur syntax in DATE.
@@ -175,7 +177,7 @@ values of `org-recur-finish-done' and `org-recur-finish-archive'."
              (org-agenda-todo 'done))
            (when org-recur-finish-archive
              (if (eq 'note org-log-done)
-                 (message "Warning: automatic archiving is disabled when org-log-done is t.")
+                 (message org-recur--warning-archiving-disabled)
                (org-agenda-archive)))))))
 (defun org-recur--org-finish ()
   "Reschedule, or optionally complete and archive, a task in `org-mode' according to its recurrence string."
