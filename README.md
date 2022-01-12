@@ -27,7 +27,6 @@ Simple recurring org-mode tasks.
 
 <!-- markdown-toc end -->
 
-
 ## Screenshot
 
 ![Screenshot](screenshot.png)
@@ -157,7 +156,7 @@ org-mode already supports ["repeated tasks"](https://orgmode.org/manual/Repeated
 + You can't see how often a task recurs from the org-agenda view, you only see the task's headline and not its `SCHEDULED`/`DEADLINE` timestamps.
 + Repeated tasks require the `.+` syntax to shift the date based on today, which is what I almost always want. If I want to schedule a `+2` task to tomorrow I can do that manually, but I still want it to be clear that the task should recur every two days.
 
-org-recur is also simpler. I want to think as little as possible when I organize my time, helping  keep my personal time management frictionless.
+org-recur is also simpler. I want to think as little as possible when I organize my time, helping keep my personal time management frictionless.
 
 ### org-habit
 
