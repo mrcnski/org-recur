@@ -5,7 +5,7 @@
 ;; Author:      Marcin Swieczkowski <marcin.swieczkowski@gmail.com>
 ;; Created:     Fri Feb 15 2019
 ;; Version:     1.3
-;; Package-Requires: ((emacs "24") (org "9.0"))
+;; Package-Requires: ((emacs "24.1") (org "9.0"))
 ;; URL:         https://github.com/m-cat/org-recur
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -62,7 +62,7 @@
 ;; Customize group
 
 (defgroup org-recur nil
-  "Recurring org-mode tasks."
+  "Recurring `org-mode' tasks."
   :group 'org)
 
 (defface org-recur
@@ -71,8 +71,7 @@
   :group 'org-recur)
 
 (defcustom org-recur-finish-archive nil
-  "Non-nil if calling `org-recur-finish' on a task without org-recur syntax \
-should archive it.
+  "Calling `org-recur-finish' on a task without org-recur syntax archives it.
 
 Note that this variable has no effect when `org-log-done' is t,
 in which case automatic archiving is disabled."
@@ -80,7 +79,7 @@ in which case automatic archiving is disabled."
   :group 'org-recur)
 
 (defcustom org-recur-finish-done nil
-  "Non-nil if calling `org-recur-finish' on a task without org-recur syntax should mark it as DONE."
+  "Calling `org-recur-finish' on a task without org-recur syntax marks it as DONE."
   :type 'boolean
   :group 'org-recur)
 
@@ -180,11 +179,13 @@ values of `org-recur-finish-done' and `org-recur-finish-archive'."
                  (message org-recur--warning-archiving-disabled)
                (org-agenda-archive)))))))
 (defun org-recur--org-finish ()
-  "Reschedule, or optionally complete and archive, a task in `org-mode' according to its recurrence string."
+  "Handle a task in `org-mode' according to its recurrence string.
+Will reschedule, or optionally complete and archive, the task"
   (let ((heading (substring-no-properties (org-get-heading))))
     (org-recur--org-schedule heading t)))
 (defun org-recur--org-agenda-finish ()
-  "Reschedule, or optionally complete and archive, a task in `org-mode-agenda' according to its recurrence string."
+  "Handle a task in `org-mode-agenda' according to its recurrence string.
+Will reschedule, or optionally complete and archive, the task."
   (let ((heading
          ;; FIXME: Find a more robust way of getting the header
          ;; from org-agenda view? This approach seems sufficient so
@@ -276,7 +277,7 @@ To schedule a task to tomorrow:
 
 ;;;###autoload
 (define-minor-mode org-recur-mode
-  "Highlight org-recur dates in org-mode.
+  "Highlight org-recur dates in `org-mode'.
 
 With a prefix argument ARG, enable org-recur mode if ARG is
 positive, and disable it otherwise. If called from Lisp, enable
