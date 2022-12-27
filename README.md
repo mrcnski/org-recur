@@ -1,8 +1,8 @@
 # org-recur
 
 [![Melpa](https://melpa.org/packages/org-recur-badge.svg)](https://melpa.org/#/org-recur)
-[![Issues](https://img.shields.io/github/issues-raw/m-cat/org-recur.svg)](https://github.com/m-cat/org-recur/issues)
-[![LoC](https://tokei.rs/b1/github/m-cat/org-recur)](https://github.com/m-cat/org-recur)
+[![Issues](https://img.shields.io/github/issues-raw/mrcnski/org-recur.svg)](https://github.com/mrcnski/org-recur/issues)
+[![LoC](https://tokei.rs/b1/github/mrcnski/org-recur)](https://github.com/mrcnski/org-recur)
 [![License: GPL3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
 
 Simple recurring org-mode tasks.
@@ -107,7 +107,7 @@ The following `use-package` configuration:
         org-recur-finish-archive t))
 ```
 
-You can also check out [my configuration](https://github.com/m-cat/init.el/blob/master/init.el) (search "org-recur") which provides additional hotkeys that I find useful (like `C-c 1` for scheduling to `+1`, tomorrow).
+You can also check out [my configuration](https://github.com/mrcnski/init.el/blob/master/init.el) (search "org-recur") which provides additional hotkeys that I find useful (like `C-c 1` for scheduling to `+1`, tomorrow).
 
 ## Recommended org-mode settings
 
