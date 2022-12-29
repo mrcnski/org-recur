@@ -212,13 +212,13 @@ Will reschedule, or optionally complete and archive, the task."
 (defun org-recur-agenda--turn-on ()
   "Highlight regexp in agenda."
   (org-recur--highlight-agenda)
-  (add-hook 'org-agenda-finalize-hook 'org-recur--highlight-agenda)
-  (add-hook 'org-agenda-mode-hook 'org-recur-agenda-mode))
+  (add-hook 'org-agenda-finalize-hook #'org-recur--highlight-agenda)
+  (add-hook 'org-agenda-mode-hook #'org-recur-agenda-mode))
 (defun org-recur-agenda--turn-off ()
   "Unhighlight regexp in agenda."
   (unhighlight-regexp org-recur--regexp)
-  (remove-hook 'org-agenda-finalize-hook 'org-recur--highlight-agenda)
-  (remove-hook 'org-agenda-mode-hook 'org-recur-agenda-mode))
+  (remove-hook 'org-agenda-finalize-hook #'org-recur--highlight-agenda)
+  (remove-hook 'org-agenda-mode-hook #'org-recur-agenda-mode))
 
 ;; Autoloads
 
