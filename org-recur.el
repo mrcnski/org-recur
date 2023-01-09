@@ -5,6 +5,8 @@
 ;; Author:      Marcin Swieczkowski <marcin.swieczkowski@gmail.com>
 ;; Created:     Fri Feb 15 2019
 ;; Version:     1.3.2
+;; Package-Version: 1.3.2
+;; Package-Commit: fa2a37d50229346929fa70b56c9d7cc34bc628ae
 ;; Package-Requires: ((emacs "24.1") (org "9.0"))
 ;; URL:         https://github.com/mrcnski/org-recur
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -143,6 +145,18 @@ Return nil if no recurrence found."
                         (match-string 1 heading)))
            ;; Split the recurrence as it may contain multiple options.
            (options (split-string recurrence ","))
+           ;; extract time stamp from the last options entry
+           (temptstamp (nth 0 (last options)))
+           (tstamp (nth 0 (last (split-string temptstamp " "))))
+           ;; remove extracted tstamp from the last wkdy entry
+           (tstamp (concat " " tstamp))
+           (options (mapcar (lambda (str)
+                              (replace-regexp-in-string tstamp "" str))
+                            options))
+           ;; add extracted tstamp to each options entry
+           (options (mapcar (lambda (str)
+                                    (concat str tstamp))
+                                  options))
            ;; Get the earliest option.
            (next-date
             (let (value)
