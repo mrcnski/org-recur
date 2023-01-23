@@ -135,20 +135,21 @@ See ‘org-read-date’ for the various forms of a date string."
   "Return the next date to reschedule to based on HEADING.
 Return nil if no recurrence found."
   (when (string-match org-recur--regexp heading)
-    (let* (
-           ;; Get the recurrence string.
-           ;; Replace any occurrence of "wkdy" (case-insensitive).
-           (recurrence (replace-regexp-in-string
-                        org-recur-weekday org-recur-weekday-recurrence
-                        (match-string 1 heading)))
-           ;; Split the recurrence as it may contain multiple options.
-           (options (split-string recurrence ","))
-           ;; Get the earliest option.
-           (next-date
-            (let (value)
-              (dolist (elt options value)
-                (setq value (if (org-recur--date-less-p elt value) elt value))))))
-      next-date)))
+    (let ((options (org-recur--recurrence-to-options (match-string 1 heading)))
+          (value))
+      ;; Get the earliest option.
+      (dolist (elt options value)
+        (setq value (if (org-recur--date-less-p elt value) elt value))))))
+
+(defun org-recur--recurrence-to-options (recurrence)
+  "Convert the RECURRENCE string to a list of options."
+  (let (
+         ;; Replace any occurrence of "wkdy" (case-insensitive).
+         (recurrence (replace-regexp-in-string
+                      org-recur-weekday org-recur-weekday-recurrence
+                      recurrence)))
+    ;; Split the recurrence as it may contain multiple options.
+    (split-string recurrence ",")))
 
 (defun org-recur--org-schedule (date finish)
   "Schedule a task in `org-mode' according to the org-recur syntax in DATE.
