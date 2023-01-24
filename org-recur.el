@@ -140,7 +140,8 @@ Return nil if no recurrence found."
           (value))
       ;; Get the earliest option.
       (dolist (elt options value)
-        (setq value (if (org-recur--date-less-p elt value) elt value))))))
+        (setq value (if (org-recur--date-less-p elt value) elt value)))
+      value)))
 
 (defun org-recur--recurrence-to-options (recurrence)
   "Convert the RECURRENCE string to a list of options."
