@@ -46,13 +46,16 @@
            '("Tue 14:00" "15:00 Wed")))
   (should (equal (org-recur--recurrence-to-options
                   "Sun,Wkdy")
-           '("Sun" "Mon" "Tue" "Wed" "Thu" "Fri")))
-  ;; (should (equal (org-recur--recurrence-to-options
-  ;;                 "13:00 Sun,10:00 Wkdy")
-  ;;          '("13:00 Sun" "10:00 Mon" "10:00 Tue" "10:00 Wed" "10:00 Thu" "10:00 Fri")))
-  ;; (should (equal (org-recur--recurrence-to-options
-  ;;                 "Wkdy 10:00,Sat 13:00")
-  ;;          '("Mon 10:00" "Tue 10:00" "Wed 10:00" "Thu 10:00" "Fri 10:00" "Sat 13:00")))
+           '("Sun" "mon" "tue" "wed" "thu" "fri")))
+  (should (equal (org-recur--recurrence-to-options
+                  "13:00 Sun,10:00 Wkdy")
+           '("13:00 Sun" "10:00 mon" "10:00 tue" "10:00 wed" "10:00 thu" "10:00 fri")))
+  (should (equal (org-recur--recurrence-to-options
+                  "Wkdy 10:00,Sat 13:00")
+           '("mon 10:00" "tue 10:00" "wed 10:00" "thu 10:00" "fri 10:00" "Sat 13:00")))
+  (should (equal (org-recur--recurrence-to-options
+                  "10:00 Wkdy,Wkdy 12:00")
+           '("10:00 mon" "10:00 tue" "10:00 wed" "10:00 thu" "10:00 fri" "mon 12:00" "tue 12:00" "wed 12:00" "thu 12:00" "fri 12:00")))
   )
 
 (provide 'org-recur-test)

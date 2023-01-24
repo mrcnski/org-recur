@@ -5,7 +5,7 @@
 ;; Author:      Marcin Swieczkowski <marcin.swieczkowski@gmail.com>
 ;; Created:     Fri Feb 15 2019
 ;; Version:     1.3.2
-;; Package-Requires: ((emacs "24.1") (org "9.0"))
+;; Package-Requires: ((emacs "24.1") (org "9.0") (dash "2.7.0"))
 ;; URL:         https://github.com/mrcnski/org-recur
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -58,6 +58,7 @@
 
 (require 'org)
 (require 'org-agenda)
+(require 'dash)
 
 ;; Customize group
 
@@ -144,12 +145,25 @@ Return nil if no recurrence found."
 (defun org-recur--recurrence-to-options (recurrence)
   "Convert the RECURRENCE string to a list of options."
   (let (
-         ;; Replace any occurrence of "wkdy" (case-insensitive).
-         (recurrence (replace-regexp-in-string
-                      org-recur-weekday org-recur-weekday-recurrence
-                      recurrence)))
-    ;; Split the recurrence as it may contain multiple options.
-    (split-string recurrence ",")))
+         ;; Split `recurrence' as it may contain multiple options.
+         (options (split-string recurrence ",")))
+    ;; Replace any occurrence of "wkdy" (case-insensitive).
+    ;; Take care to apply the timestamp, if present, to all days.
+    (-flatten
+     (-map
+      (lambda (option)
+        (if (string-match-p org-recur-weekday option)
+            ;; Split on weekday string and get anything before and after it.
+            (let* ((splits (split-string option org-recur-weekday))
+                   (before (car splits))
+                   (after (car (cdr splits))))
+              (-map
+               ;; Add `before' and `after' to each weekday.
+               (lambda (day)
+                 (concat before day after))
+               (split-string org-recur-weekday-recurrence ",")))
+          option))
+      options))))
 
 (defun org-recur--org-schedule (date finish)
   "Schedule a task in `org-mode' according to the org-recur syntax in DATE.
