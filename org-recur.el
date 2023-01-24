@@ -5,7 +5,7 @@
 ;; Author:      Marcin Swieczkowski <marcin.swieczkowski@gmail.com>
 ;; Created:     Fri Feb 15 2019
 ;; Version:     1.3.2
-;; Package-Requires: ((emacs "24.1") (org "9.0"))
+;; Package-Requires: ((emacs "24.1") (org "9.0") (dash "2.7.0"))
 ;; URL:         https://github.com/mrcnski/org-recur
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -58,6 +58,7 @@
 
 (require 'org)
 (require 'org-agenda)
+(require 'dash)
 
 ;; Customize group
 
@@ -135,20 +136,35 @@ See ‘org-read-date’ for the various forms of a date string."
   "Return the next date to reschedule to based on HEADING.
 Return nil if no recurrence found."
   (when (string-match org-recur--regexp heading)
-    (let* (
-           ;; Get the recurrence string.
-           ;; Replace any occurrence of "wkdy" (case-insensitive).
-           (recurrence (replace-regexp-in-string
-                        org-recur-weekday org-recur-weekday-recurrence
-                        (match-string 1 heading)))
-           ;; Split the recurrence as it may contain multiple options.
-           (options (split-string recurrence ","))
-           ;; Get the earliest option.
-           (next-date
-            (let (value)
-              (dolist (elt options value)
-                (setq value (if (org-recur--date-less-p elt value) elt value))))))
-      next-date)))
+    (let ((options (org-recur--recurrence-to-options (match-string 1 heading)))
+          (value))
+      ;; Get the earliest option.
+      (dolist (elt options value)
+        (setq value (if (org-recur--date-less-p elt value) elt value)))
+      value)))
+
+(defun org-recur--recurrence-to-options (recurrence)
+  "Convert the RECURRENCE string to a list of options."
+  (let (
+         ;; Split `recurrence' as it may contain multiple options.
+         (options (split-string recurrence ",")))
+    ;; Replace any occurrence of "wkdy" (case-insensitive).
+    ;; Take care to apply the timestamp, if present, to all days.
+    (-flatten
+     (-map
+      (lambda (option)
+        (if (string-match-p org-recur-weekday option)
+            ;; Split on weekday string and get anything before and after it.
+            (let* ((splits (split-string option org-recur-weekday))
+                   (before (car splits))
+                   (after (car (cdr splits))))
+              (-map
+               ;; Add `before' and `after' to each weekday.
+               (lambda (day)
+                 (concat before day after))
+               (split-string org-recur-weekday-recurrence ",")))
+          option))
+      options))))
 
 (defun org-recur--org-schedule (date finish)
   "Schedule a task in `org-mode' according to the org-recur syntax in DATE.
