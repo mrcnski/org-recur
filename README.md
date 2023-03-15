@@ -113,7 +113,7 @@ Refresh the org-agenda whenever a task is rescheduled:
 Keep the task metadata clean:
 
 ```elisp
-;; Log time a task was set to Done.
+;; Log time a task was set to DONE.
 (setq org-log-done (quote time))
 
 ;; Don't log the time a task was rescheduled or redeadlined.
@@ -152,7 +152,7 @@ Note that `org-recur` does not have this limitation; the recurrence syntax
 (`|wkdy|`) can appear anywhere in the heading.
 
 `org-recur` does not touch todo states, except when completing a one-off task
-(this can be disabled). Apart from that, they need to be managed manually. i.e.
+(when enabled). Apart from that, they need to be managed manually. i.e.
 `org-recur` does not try to guess how a todo state should change for recurring
 tasks. This keeps the package simple and unopinionated.
 
