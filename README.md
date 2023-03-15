@@ -54,20 +54,6 @@ You can use the provided command `org-recur-finish` to reschedule tasks based on
 
 The provided command `org-recur-schedule-today` (recommended hotkey `C-c 0`) schedules a task to the current date.
 
-### Time of day
-
-org-recur supports time of day. It looks something like this: `|1 10:00, 15 12:00| headline`. It's a bit verbose, but you can specify different times of day for each date. If you don't want the verbosity you can move the time of day outside of org-recur: `|1, 15| 10:00 headline` works just fine, and is what I have been doing. org-agenda will pick up the time in either scenario.
-
-### Customizing weekdays
-
-You can customize the `org-recur-weekday-recurrence` variable to match your lifestyle. If a "weekday" (a day in which you work or study) for you includes Saturday, or excludes Wednesday, you can modify the variable accordingly.
-
-### "First X of the month"
-
-org-recur doesn't allow for something like "first Wednesday of the month". It only supports `org-schedule` syntax (which is its backend) as well as the ability to pick the *soonest* of several options. These unfortunately can't be combined for some more complicated recurrences.
-
-For a possible alternative which allows for this, please see "Sexp diary entries" below and [here](https://stackoverflow.com/q/16946220/6085242) for an example.
-
 ## Installing
 
 Make sure you have set up [MELPA](http://melpa.milkbox.net/#/getting-started) and run:
@@ -145,6 +131,41 @@ Prefer rescheduling to future dates and times:
 ```elisp
 (setq org-read-date-prefer-future 'time)
 ```
+
+## Advanced Usage
+
+### Time of day
+
+org-recur supports time of day. It looks something like this: `|1 10:00, 15 12:00| headline`. It's a bit verbose, but you can specify different times of day for each date. If you don't want the verbosity you can move the time of day outside of org-recur: `|1, 15| 10:00 headline` works just fine, and is what I have been doing. org-agenda will pick up the time in either scenario.
+
+### Customizing weekdays
+
+You can customize the `org-recur-weekday-recurrence` variable to match your lifestyle. If a "weekday" (a day in which you work or study) for you includes Sunday, or excludes Wednesday, you can modify the variable accordingly.
+
+### Todo states
+
+It is possible to have todo states in a heading -- they are compatible with
+`org-recur`, though they are not necessary to have. If you wish to include a
+todo state, it **must** appear **first** in the heading, or it will not be
+picked up by org-mode. So, the correct format would look like this:
+
+```org
+ ** TODO |wkdy| test
+```
+
+Note that `org-recur` does not have this limitation; the recurrence syntax
+(`|wkdy|`) can appear anywhere in the heading.
+
+`org-recur` does not touch todo states, except when completing a one-off task
+(this can be disabled). Apart from that, they need to be managed manually. i.e.
+`org-recur` does not try to guess how a todo state should change for recurring
+tasks. This keeps the package simple and unopinionated.
+
+### "First X of the month"
+
+org-recur doesn't allow for something like "first Wednesday of the month". It only supports `org-schedule` syntax (which is its backend) as well as the ability to pick the *soonest* of several options. These unfortunately can't be combined for some more complicated recurrences.
+
+For a possible alternative which allows for this, please see "Sexp diary entries" below and [here](https://stackoverflow.com/q/16946220/6085242) for an example.
 
 ## Alternatives
 
