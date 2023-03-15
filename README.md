@@ -5,27 +5,7 @@
 [![LoC](https://tokei.rs/b1/github/mrcnski/org-recur)](https://github.com/mrcnski/org-recur)
 [![License: GPL3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
 
-Simple recurring org-mode tasks.
-
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [org-recur](#org-recur)
-    - [Screenshot](#screenshot)
-    - [About](#about)
-    - [Usage](#usage)
-        - [Time of day](#time-of-day)
-        - [Customizing weekdays](#customizing-weekdays)
-        - ["First X of the month"](#first-x-of-the-month)
-    - [Installing](#installing)
-    - [Recommended Configuration](#recommended-configuration)
-    - [Recommended org-mode settings](#recommended-org-mode-settings)
-    - [Alternatives](#alternatives)
-        - [Repeated tasks](#repeated-tasks)
-        - [org-habit](#org-habit)
-        - [Sexp diary entries](#sexp-diary-entries)
-
-<!-- markdown-toc end -->
+Simple recurring org-mode tasks!
 
 ## Screenshot
 
@@ -33,13 +13,18 @@ Simple recurring org-mode tasks.
 
 ## About
 
-This package extends org-mode and org-agenda with support for defining recurring tasks and easily scheduling them.
+This package extends org-mode and org-agenda with support for defining recurring
+tasks and easily scheduling them.
 
-I initially wrote this package for myself, because I've found that simple task management systems are the most effective for me. With this package I can just press `d` in the org-agenda to quickly reschedule a recurring chore -- neat! I hope that others happen to find this useful as well.
+This package aims to be simple -- with the recommended configuration, you can
+just press `d` in the org-agenda to quickly reschedule a recurring chore.
 
 ## Usage
 
-By adding some simple syntax to anywhere in the task heading you can control how often the task should recur. Examples:
+By adding some simple syntax to anywhere in the task heading you can control how
+often the task should recur.
+
+**Examples:**
 
 + `|+2|`: Recur every other day.
 + `|+w|`: Recur every week.
@@ -48,11 +33,21 @@ By adding some simple syntax to anywhere in the task heading you can control how
 + `|Sun,Sat|`: Recur every Sunday and Saturday.*
 + `|Wkdy|`: Recur every weekday.*
 
-[The syntax is a superset of the syntax already accepted by `org-schedule`. Additional syntax, provided by org-recur, is marked by *.]
+[The syntax is mostly a superset of the syntax already accepted by
+`org-schedule`. Additional syntax, provided by org-recur, is marked by *.]
 
-You can use the provided command `org-recur-finish` to reschedule tasks based on their recurrence syntax. With the point over a task, in either org-mode or org-agenda, call `org-recur-finish` (recommended hotkey `C-c d`) and it will handle the task. If the task does not contain a recurrence syntax, the command will ignore it by default, though this is customizable.
+You can use the provided command `org-recur-finish` to reschedule tasks based on
+their recurrence syntax. With the point over a task, in either org-mode or
+org-agenda, call `org-recur-finish` and it will handle the task. The recommended
+hotkey is `C-c d`, and also `d` in org-agenda.
 
-The provided command `org-recur-schedule-today` (recommended hotkey `C-c 0`) schedules a task to the current date.
+### More usage
+
+If the task does not contain a recurrence syntax, the command will ignore it by
+default. You can customize this to mark the task as `DONE` and archive it.
+
+The provided command `org-recur-schedule-today` (recommended hotkey `C-c 0`)
+schedules any task to the current date.
 
 ## Installing
 
@@ -73,9 +68,9 @@ Or, if you have [use-package](https://github.com/jwiegley/use-package):
 
 The following `use-package` configuration:
 
-+ Enables `org-recur-mode` in org-mode files and `org-recur-agenda-mode` in the org-agenda.
-+ Sets the suggested keybindings (`C-c d`, as well as `d` in `org-recur-agenda-mode`).
-+ Enables `org-recur-finish` acting on headings without recurrence syntax, marking them done and archiving them.
++ Enables `org-recur-mode` in org-mode files and `org-recur-agenda-mode` in org-agenda.
++ Sets the suggested keybindings (`C-c d`, as well as `d` in org-agenda).
++ Enables `org-recur-finish` acting on headings without recurrence syntax, marking them `DONE` and archiving them.
 
 ```elisp
 (use-package org-recur
