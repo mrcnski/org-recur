@@ -19,6 +19,17 @@ tasks and easily scheduling them.
 This package aims to be simple -- with the recommended configuration, you can
 just press `d` in the org-agenda to quickly reschedule a recurring chore.
 
+### Testimonial
+
+> Org-recur is incredibly good. It is so much more intuitive than the standard
+> means to designate recurring tasks in org, and it easily integrated into my
+> current org setup. What I was not expecting from org-recur, is how it cleaned
+> up my org files, making them easier to manage and read. It placed all the
+> important information on one line together, and eliminated time spent
+> searching for deadlines.
+
+~ [anoduck](https://github.com/anoduck/anoduck/discussions/3#discussioncomment-5434803)
+
 ## Usage
 
 By adding some simple syntax to anywhere in the task heading you can control how
