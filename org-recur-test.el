@@ -4,6 +4,9 @@
 ;;
 ;; Unit tests for the package `org-recur'.
 ;;
+;; How to run:
+;; <https://www.gnu.org/software/emacs/manual/html_node/ert/Running-Tests-Interactively.html>
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; This program is free software; you can redistribute it and/or
