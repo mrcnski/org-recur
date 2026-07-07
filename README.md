@@ -64,7 +64,7 @@ schedules any task to the current date.
 
 ## Installing
 
-Make sure you have set up [MELPA](http://melpa.milkbox.net/#/getting-started) and run:
+Make sure you have set up [MELPA](https://melpa.org/#/getting-started) and run:
 
 ```
 M-x package-install RET org-recur RET
