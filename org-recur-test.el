@@ -61,5 +61,26 @@
            '("10:00 mon" "10:00 tue" "10:00 wed" "10:00 thu" "10:00 fri" "mon 12:00" "tue 12:00" "wed 12:00" "thu 12:00" "fri 12:00")))
   )
 
+(ert-deftest recurrence-to-options-case-fold-test ()
+  ;; Wkdy must expand regardless of the user's case-fold-search setting.
+  (let ((case-fold-search nil))
+    (should (equal (org-recur--recurrence-to-options
+                    "Sun,WKDY")
+             '("Sun" "mon" "tue" "wed" "thu" "fri")))))
+
+(ert-deftest recurrence-to-options-weekday-literal-test ()
+  ;; A customized weekday string is matched literally, not as a regexp.
+  (let ((org-recur-weekday "w.d"))
+    (should (equal (org-recur--recurrence-to-options
+                    "wxd")
+             '("wxd")))
+    (should (equal (org-recur--recurrence-to-options
+                    "w.d")
+             '("mon" "tue" "wed" "thu" "fri"))))
+  ;; The weekday string only matches as a whole word.
+  (should (equal (org-recur--recurrence-to-options
+                  "wkdyy")
+           '("wkdyy"))))
+
 (provide 'org-recur-test)
 ;;; org-recur-test.el ends here

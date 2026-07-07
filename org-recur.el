@@ -148,15 +148,19 @@ Return nil if no recurrence found."
   "Convert the RECURRENCE string to a list of options."
   (let (
          ;; Split `recurrence' as it may contain multiple options.
-         (options (split-string recurrence ",")))
+         (options (split-string recurrence ","))
+         ;; Match the weekday string case-insensitively, as a whole word,
+         ;; treating it as a literal string rather than a regexp.
+         (case-fold-search t)
+         (weekday-regexp (concat "\\b" (regexp-quote org-recur-weekday) "\\b")))
     ;; Replace any occurrence of "wkdy" (case-insensitive).
     ;; Take care to apply the timestamp, if present, to all days.
     (-flatten
      (-map
       (lambda (option)
-        (if (string-match-p org-recur-weekday option)
+        (if (string-match-p weekday-regexp option)
             ;; Split on weekday string and get anything before and after it.
-            (let* ((splits (split-string option org-recur-weekday))
+            (let* ((splits (split-string option weekday-regexp))
                    (before (car splits))
                    (after (car (cdr splits))))
               (-map
