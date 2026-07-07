@@ -8,11 +8,11 @@
 [![Melpa](https://melpa.org/packages/org-recur-badge.svg)](https://melpa.org/#/org-recur)
 [![Issues](https://img.shields.io/github/issues-raw/mrcnski/org-recur.svg)](https://github.com/mrcnski/org-recur/issues)
 [![License: GPL3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
+
+<img src="screenshot.png" alt="org-agenda showing recurring org-recur tasks" width="550">
 </div>
 
 ## About
-
-<img src="screenshot.png" alt="org-agenda showing recurring org-recur tasks" width="500">
 
 This package extends org-mode and org-agenda with support for defining recurring
 tasks and easily scheduling them.
