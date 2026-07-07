@@ -22,14 +22,14 @@ just press `d` in the org-agenda to quickly reschedule a recurring chore.
 
 ### Testimonial
 
-> Org-recur is incredibly good. It is so much more intuitive than the standard
+> <em>“Org-recur is incredibly good. It is so much more intuitive than the standard
 > means to designate recurring tasks in org, and it easily integrated into my
 > current org setup. What I was not expecting from org-recur, is how it cleaned
 > up my org files, making them easier to manage and read. It placed all the
 > important information on one line together, and eliminated time spent
-> searching for deadlines.
-
-~ [anoduck](https://github.com/anoduck/anoduck/discussions/3#discussioncomment-5434803)
+> searching for deadlines.”</em>
+>
+> — <a href="https://github.com/anoduck"><img src="https://github.com/anoduck.png?size=64" width="22" align="middle" alt="anoduck's avatar"></a> <a href="https://github.com/anoduck/anoduck/discussions/3#discussioncomment-5434803"><b>anoduck</b></a>
 
 ## Usage
 
