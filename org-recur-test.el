@@ -1,4 +1,4 @@
-;;; org-recur-test.el --- Tests for org-recur.
+;;; org-recur-test.el --- Tests for org-recur -*- lexical-binding: t; -*-
 ;;
 ;;; Commentary:
 ;;
