@@ -185,7 +185,7 @@ values of `org-recur-finish-done' and `org-recur-finish-archive'."
              (org-todo 'done))
            (when org-recur-finish-archive
              (if (eq 'note org-log-done)
-                 (message org-recur--warning-archiving-disabled)
+                 (message "%s" org-recur--warning-archiving-disabled)
                (org-archive-subtree)))))))
 (defun org-recur--org-agenda-schedule (recur-string finish)
   "Schedule a task in `org-mode-agenda' according to syntax in RECUR-STRING.
@@ -199,7 +199,7 @@ values of `org-recur-finish-done' and `org-recur-finish-archive'."
              (org-agenda-todo 'done))
            (when org-recur-finish-archive
              (if (eq 'note org-log-done)
-                 (message org-recur--warning-archiving-disabled)
+                 (message "%s" org-recur--warning-archiving-disabled)
                (org-agenda-archive)))))))
 (defun org-recur--org-finish ()
   "Handle a task in `org-mode' according to its recurrence string.
