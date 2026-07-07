@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 206" width="200" height="206" role="img" aria-label="org-recur mascot: a smiling snail whose shell carries a recurrence loop">
+  <title>org-recur — spiral snail</title>
+
+  <!-- ground shadow -->
+  <ellipse cx="100" cy="192" rx="78" ry="6" fill="#000000" opacity="0.06"/>
+
+  <!-- antennae -->
+  <path d="M138 102 L131 82 M152 102 L159 82" fill="none" stroke="#EFA8C8" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="130" cy="80" r="5" fill="#E86A8A"/>
+  <circle cx="160" cy="80" r="5" fill="#E86A8A"/>
+
+  <!-- body: base + neck/head -->
+  <ellipse cx="94" cy="176" rx="60" ry="11" fill="#EFA8C8"/>
+  <rect x="130" y="98" width="30" height="84" rx="15" fill="#EFA8C8"/>
+
+  <!-- face -->
+  <circle cx="139" cy="116" r="3.6" fill="#2b2b3a"/>
+  <circle cx="151" cy="116" r="3.6" fill="#2b2b3a"/>
+  <circle cx="140.2" cy="114.8" r="1.2" fill="#ffffff"/>
+  <circle cx="152.2" cy="114.8" r="1.2" fill="#ffffff"/>
+  <path d="M140 126 Q145 131 150 126" fill="none" stroke="#2b2b3a" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="133" cy="123" r="3.5" fill="#E86A8A" opacity="0.5"/>
+  <circle cx="157" cy="123" r="3.5" fill="#E86A8A" opacity="0.5"/>
+
+  <!-- shell -->
+  <circle cx="80" cy="126" r="46" fill="#7D6EE8"/>
+  <circle cx="80" cy="126" r="37" fill="#9B8CFF"/>
+
+  <!-- recurrence loop -->
+  <path d="M80 102 A24 24 0 1 1 59 139" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+  <path d="M68 148 L53 139 L67 130 Z" fill="#ffffff" opacity="0.9"/>
+</svg>

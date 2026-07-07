@@ -1,17 +1,18 @@
+<div align="center">
+  <img src="mascot.svg" alt="org-recur mascot — a smiling snail whose shell carries a recurrence loop" width="180"/>
+
 # org-recur
+
+*Simple recurring org-mode tasks!*
 
 [![Melpa](https://melpa.org/packages/org-recur-badge.svg)](https://melpa.org/#/org-recur)
 [![Issues](https://img.shields.io/github/issues-raw/mrcnski/org-recur.svg)](https://github.com/mrcnski/org-recur/issues)
-[![LoC](https://tokei.rs/b1/github/mrcnski/org-recur)](https://github.com/mrcnski/org-recur)
 [![License: GPL3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
-
-Simple recurring org-mode tasks!
-
-## Screenshot
-
-![Screenshot](screenshot.png)
+</div>
 
 ## About
+
+<img src="screenshot.png" alt="org-agenda showing recurring org-recur tasks" width="500">
 
 This package extends org-mode and org-agenda with support for defining recurring
 tasks and easily scheduling them.
