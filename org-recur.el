@@ -74,8 +74,9 @@
 (defcustom org-recur-finish-archive nil
   "Calling `org-recur-finish' on a task without org-recur syntax archives it.
 
-Note that this variable has no effect when `org-log-done' is t,
-in which case automatic archiving is disabled."
+Note that this variable has no effect when `org-log-done' is
+`note', in which case automatic archiving is disabled (archiving
+would move the entry before the log note is captured)."
   :type 'boolean
   :group 'org-recur)
 
@@ -110,7 +111,7 @@ between commas."
 
 (defconst org-recur--full-keywords `((,org-recur--regexp-full 1 'org-recur t)))
 
-(defconst org-recur--warning-archiving-disabled "Warning: automatic archiving is disabled when org-log-done is t. Set org-recur-finish-archive to nil to disable this message.")
+(defconst org-recur--warning-archiving-disabled "Warning: automatic archiving is disabled when org-log-done is 'note. Set org-recur-finish-archive to nil to disable this message.")
 
 (defvar org-recur--buffer-keywords nil)
 
