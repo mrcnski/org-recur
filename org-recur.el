@@ -133,11 +133,13 @@ See ‘org-read-date’ for the various forms of a date string."
       (time-less-p (org-recur--date-string-to-time D1)
                    (org-recur--date-string-to-time D2)))))
 
-(defun org-recur--get-next-date (heading)
-  "Return the next date to reschedule to based on HEADING.
+(defun org-recur--get-next-date (recur-string)
+  "Return the next date to reschedule to based on RECUR-STRING.
+RECUR-STRING is any string containing org-recur syntax, e.g. a
+task heading or a bare date string like \"|+1|\".
 Return nil if no recurrence found."
-  (when (string-match org-recur--regexp heading)
-    (let ((options (org-recur--recurrence-to-options (match-string 1 heading)))
+  (when (string-match org-recur--regexp recur-string)
+    (let ((options (org-recur--recurrence-to-options (match-string 1 recur-string)))
           (value))
       ;; Get the earliest option.
       (dolist (elt options value)
@@ -171,11 +173,11 @@ Return nil if no recurrence found."
           option))
       options))))
 
-(defun org-recur--org-schedule (date finish)
-  "Schedule a task in `org-mode' according to the org-recur syntax in DATE.
+(defun org-recur--org-schedule (recur-string finish)
+  "Schedule a task in `org-mode' according to syntax in RECUR-STRING.
 When FINISH is t, optionally completes and archives the task, based on the
 values of `org-recur-finish-done' and `org-recur-finish-archive'."
-  (let ((next-date (org-recur--get-next-date date)))
+  (let ((next-date (org-recur--get-next-date recur-string)))
     (cond (next-date
            (org-schedule nil next-date))
           (finish
@@ -185,11 +187,11 @@ values of `org-recur-finish-done' and `org-recur-finish-archive'."
              (if (eq 'note org-log-done)
                  (message org-recur--warning-archiving-disabled)
                (org-archive-subtree)))))))
-(defun org-recur--org-agenda-schedule (date finish)
-  "Schedule a task in `org-mode-agenda' according to org-recur syntax in DATE.
+(defun org-recur--org-agenda-schedule (recur-string finish)
+  "Schedule a task in `org-mode-agenda' according to syntax in RECUR-STRING.
 When FINISH is t, optionally completes and archives the task, based on the
 values of `org-recur-finish-done' and `org-recur-finish-archive'."
-  (let ((next-date (org-recur--get-next-date date)))
+  (let ((next-date (org-recur--get-next-date recur-string)))
     (cond (next-date
            (org-agenda-schedule nil next-date))
           (finish
