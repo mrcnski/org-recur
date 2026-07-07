@@ -102,6 +102,10 @@ The following `use-package` configuration:
 
 You can also check out [my configuration](https://github.com/mrcnski/init.el/blob/master/init.el) (search "org-recur") which provides additional hotkeys that I find useful (like `C-c 1` for scheduling to `+1`, tomorrow).
 
+**Note:** enabling `org-recur-agenda-mode` manually only affects that one agenda
+buffer. To enable it in every agenda buffer, use the `org-agenda-mode` hook as
+shown above.
+
 ## Recommended org-mode settings
 
 Here are some org-mode settings that work well in conjunction with org-recur.
