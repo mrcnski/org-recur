@@ -82,5 +82,28 @@
                   "wkdyy")
            '("wkdyy"))))
 
+(ert-deftest date-less-p-test ()
+  ;; A nil or empty D2 is considered greater than any date string.
+  (should (org-recur--date-less-p "+1" nil))
+  (should (org-recur--date-less-p "+1" ""))
+  ;; A nil or empty D1 is never less than a date string.
+  (should-not (org-recur--date-less-p nil "+1"))
+  (should-not (org-recur--date-less-p "" "+1"))
+  ;; Ordinary comparisons.
+  (should (org-recur--date-less-p "+1" "+2"))
+  (should-not (org-recur--date-less-p "+2" "+1"))
+  (should-not (org-recur--date-less-p "+1" "+1")))
+
+(ert-deftest get-next-date-test ()
+  ;; No recurrence syntax.
+  (should-not (org-recur--get-next-date "no recurrence here"))
+  ;; Empty recurrence syntax is treated as no recurrence.
+  (should-not (org-recur--get-next-date "task || foo"))
+  ;; Single option.
+  (should (equal (org-recur--get-next-date "task |+2| foo") "+2"))
+  ;; The earliest option wins, regardless of order.
+  (should (equal (org-recur--get-next-date "task |+1,+2| foo") "+1"))
+  (should (equal (org-recur--get-next-date "task |+2,+1| foo") "+1")))
+
 (provide 'org-recur-test)
 ;;; org-recur-test.el ends here
