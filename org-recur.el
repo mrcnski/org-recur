@@ -275,7 +275,6 @@ To schedule a task to tomorrow:
 #+BEGIN_SRC elisp
 \(org-recur-schedule-date \"|+1|\")
 #+END_SRC"
-  (interactive)
   (if (derived-mode-p 'org-agenda-mode)
       (org-recur--org-agenda-schedule date nil)
     (org-recur--org-schedule date nil)))
